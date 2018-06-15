@@ -1,0 +1,9 @@
+declare
+num number :=10;
+fact number :=1;
+begin 
+for a in 1..num loop
+fact := fact*a;
+end loop;
+dbms_output.put_line('The factorial of '||num||' is :'||fact);
+end;

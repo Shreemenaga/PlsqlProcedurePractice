@@ -1,0 +1,16 @@
+declare
+limit number :=30;
+num1 number :=0;
+num2 number :=1;
+tot number :=0;
+begin
+dbms_output.put_line(num1||' ');
+dbms_output.put_line(num2||' ');
+while tot<limit 
+loop
+tot :=num1+num2;
+dbms_output.put_line(tot||' ');
+num1 := num2;
+num2 := tot;
+end loop;
+end;

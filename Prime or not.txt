@@ -1,0 +1,17 @@
+declare
+flag boolean :=false;
+num number :=10;
+begin
+for a in 2..num/2 loop
+if( (mod(num,a))= 0) then
+flag := true;
+exit;
+end if;
+end loop;
+if flag then
+dbms_output.put_line(num||' is not Prime');
+else
+dbms_output.put_line(num||' is Prime');
+end if;
+end;
+/

@@ -1,0 +1,22 @@
+declare
+num number :=153;
+val number :=num;
+total number :=0;
+rem number;
+cube number;
+
+begin
+dbms_output.put_line('Given number is :'||num);
+while num>0
+loop
+rem := mod(num,10);
+cube := power(rem,3);
+total := total+cube;
+num :=trunc(num/10);
+end loop;
+if(total = val) then
+dbms_output.put_line('Given number is Amstrong Number');
+else
+dbms_output.put_line('Given number is not Amstrong Number');
+end if;
+end;

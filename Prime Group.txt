@@ -1,0 +1,19 @@
+declare
+init number :=10;
+limit number :=30;
+flag boolean;
+begin
+for i in init..limit loop
+flag := true;
+for a in 2..i/2 loop
+if( (mod(i,a))= 0) then
+flag := false;
+exit;
+end if;
+end loop;
+if flag then
+dbms_output.put_line(i );
+end if;
+end loop;
+end;
+/
