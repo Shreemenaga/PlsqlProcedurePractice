@@ -1,0 +1,11 @@
+create sequence user_detail_id_seq;
+create sequence category_id_seq;
+create sequence supp_id_seq;
+create sequence prod_id_seq;
+create sequence cart_id_for_user_seq;
+create sequence order_status_id_seq;
+create sequence cart_status_id_seq;
+create sequence supplier_action_id_seq;
+create sequence supplier_appr_id_seq;
+create sequence org_approval_id_seq;
+create sequence users_money_id_seq;
