@@ -1,0 +1,32 @@
+create or replace procedure insert_user_details(name IN varchar,contact_no IN number,addr IN varchar) as
+begin
+insert into user_details values (user_detail_id_seq.nextval,name,contact_no,addr);
+end;
+/
+
+begin 
+insert_user_details('Shree',9876543210,'12/5 Sidha Nagar, Palani');
+end;
+
+create or replace procedure insert_category_details(name IN varchar) as
+begin
+insert into category values (category_id_seq.nextval,name);
+end;
+/
+
+create or replace procedure insert_supplier_details(name IN varchar,city IN varchar,contact_no IN varchar) as
+begin
+insert into supplier values (supp_id_seq.nextval,name,city,contact_no);
+end;
+/
+
+
+create or replace procedure insert_product_details(name IN varchar,count IN number,cat_id IN number, supp_id IN number,price number(16,2)) as
+begin
+insert into product values (prod_id_seq.nextval,name,count,cat_id,supp_id,price);
+end;
+/
+
+begin 
+insert_product_details('T-Shirts',1200,1,1,900.00);
+end;
