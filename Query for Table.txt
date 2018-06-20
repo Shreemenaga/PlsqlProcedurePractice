@@ -5,13 +5,13 @@ contact_no	number,
 address		varchar2(500),
  primary key (user_id)
 )
-
+-------------------------------------------------------------------------------------------------------------
 create table category(
 category_id	number not null,
 category_name	varchar2(100),
  primary key (category_id)
 )
-
+--------------------------------------------------------------------------------------------------------------
 create table supplier(
 supplier_id number not null,
 supplier_name varchar2(100),
@@ -19,20 +19,21 @@ supplier_city varchar2(200),
 supplier_contact number,
  primary key (supplier_id)
 )
-
+--------------------------------------------------------------------------------------------------------------
 create table product(
 product_id number not null ,
 product_name varchar2(100),
-product count number,
+product_count number,
 category_id number,
 supplier_id number,
 primary key (product_id)
 )
 alter table product add constraint fk_category_id foreign key (category_id) references category (category_id);
 alter table product add constraint fk_supplier_id foreign key (supplier_id) references supplier (supplier_id);
-alter table product add prd_tot_count number;
 alter table product add prd_price_for_one number(16,2);
-
+create index prod_supp_id on product (supplier_id);
+create index prod_cat_id on product (category_id);
+----------------------------------------------------------------------------------------------------------------
 create table cart(
 cart_id number not null,
 user_id number,
@@ -43,7 +44,7 @@ alter table cart add constraint fk_user_id foreign key (user_id) references user
 alter table cart add constraint fk_product_id foreign key (product_id) references product (product_id);
 alter table cart add product_qty number;
 alter table cart add tot_price number(16,2);
-
+----------------------------------------------------------------------------------------------------------------
 create table orders_status(
 order_id number not null,
 order_status varchar2(100),
@@ -51,28 +52,32 @@ cart_id number,
 primary key (order_id)
 )
 alter table orders_status add constraint fk_cart_id foreign key (cart_id) references cart (cart_id);
-
+create index ordr_st_cart_id on orders_status (cart_id);
+------------------------------------------------------------------------------------------------------------------
 create table cart_status(
 cart_status_id	number,
 cart_status	varchar2(100),
 cart_id		number
 )
 alter table cart_status add constraint fk1_cart_id foreign key (cart_id) references cart (cart_id);
-
+create index cart_st_cart_id on cart_status (cart_id);
+-------------------------------------------------------------------------------------------------------------------
 create table supplier_action(
 action_id	number,
 action_flag	varchar2(10),
 cart_id		number
 ) 
 alter table supplier_action add constraint fk2_cart_id foreign key (cart_id) references cart (cart_id);
-
+create index supp_act_cart_id on supplier_action (cart_id);
+---------------------------------------------------------------------------------------------------------------------
 create table order_return(
 order_return_id	number,
 cart_id		number,
 primary key (order_return_id)
 )
 alter table order_return add constraint fk3_cart_id foreign key (cart_id) references cart (cart_id);
-
+create index ordr_rtn_cart_id on order_return (cart_id);
+-----------------------------------------------------------------------------------------------------------------------
 create table supp_approval(
 supp_appr_id number,
 order_return_id number,
@@ -80,7 +85,8 @@ supp_appr_status varchar2(100),
 primary key (supplier_appr_id)
 )
 alter table supp_approval add constraint fk3_order_return_id foreign key (order_return_id) references order_return (order_return_id);
-
+create index supp_aprvl_rtn_id on supp_approval (order_return_id);
+------------------------------------------------------------------------------------------------------------------------------------------------
 create table org_appr(
 org_appr_id number,
 org_appr_status varchar2(50),
@@ -88,7 +94,8 @@ supplier_appr_id number,
 primary key(org_appr_id)
 )
 alter table org_appr add constraint fk_supplier_appr_id foreign key (supplier_appr_id) references supplier_approval (supplier_appr_id);
-
+create index org_appr_supp_apr_id on org_appr (supplier_appr_id);
+-----------------------------------------------------------------------------------------------------------------------------------------
 create table users_money(
 users_money_id	number,
 user_id		number,
@@ -96,5 +103,6 @@ amount		number,
 primary key(user_money_id)
 )
 alter table users_money add constraint fk1_user_id foreign key (user_id) references user_details (user_id);
-
+create index users_money_usr_id on users_money (user_id);
+-------------------------------------------------------------------------------------------------------------------------------------------
 
