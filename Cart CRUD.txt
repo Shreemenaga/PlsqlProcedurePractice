@@ -1,0 +1,34 @@
+create or replace procedure add_to_cart (usr_id IN number,prd_id IN number,prd_qty IN number) as
+price number;
+rp number;
+after_qty number;
+tot_qty number;
+begin
+select prd_price_for_one into rp from product where product_id = prd_id;
+price := prd_qty*rp; 
+insert into cart values (cart_id_for_user_seq.nextval,usr_id,prd_id,prd_qty,price);
+select product_count into tot_qty from product where product_id = prd_id;
+after_qty := tot_qty-prd_qty;
+update product set product_count = after_qty where product_id = prd_id;
+end;
+/
+
+begin
+add_to_cart (1,2,1);
+end;
+/
+
+create or replace procedure delete_cart (c_id IN number,usr_id IN number) as
+prd_id number;
+prd_tot number;
+prd_qty number;
+p_prd_qty number;
+begin
+select product_id,product_qty into prd_id,prd_qty from cart where cart_id = c_id and user_id = usr_id;
+select product_count into p_prd_qty from product where product_id= prd_id;
+prd_tot := p_prd_qty+prd_qty;
+update product set product_count = prd_tot where product_id = prd_id;
+delete from cart where cart_id = c_id;
+dbms_output.put_line('Cart Deleted Succesfully');
+end;
+/
